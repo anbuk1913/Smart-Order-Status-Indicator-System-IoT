@@ -1,0 +1,207 @@
+/* ============================================
+   Restaurant Management System - Theme Variables
+   ============================================ */
+
+   :root {
+    /* Primary Brand Colors */
+    --chef-orange: #FF6B35;
+    --chef-orange-light: #FF8A5C;
+    --chef-orange-dark: #E65525;
+    
+    --chef-red: #D32F2F;
+    --chef-red-light: #EF5350;
+    --chef-red-dark: #B71C1C;
+    
+    --chef-dark: #2C2416;
+    --chef-dark-light: #3D3326;
+    
+    --chef-cream: #FFF8F0;
+    --chef-cream-dark: #F5E8D8;
+    
+    --chef-gold: #FFD700;
+    --chef-gold-light: #FFE54C;
+    --chef-gold-dark: #DAB600;
+    
+    /* Status Colors */
+    --status-idle: #9E9E9E;
+    --status-placed: #FFA726;
+    --status-processing: #42A5F5;
+    --status-delivered: #66BB6A;
+    
+    /* Neutral Colors */
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
+    --gray-500: #9E9E9E;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(44, 36, 22, 0.08);
+    --shadow-md: 0 4px 16px rgba(44, 36, 22, 0.12);
+    --shadow-lg: 0 8px 24px rgba(44, 36, 22, 0.15);
+    --shadow-xl: 0 12px 32px rgba(44, 36, 22, 0.18);
+    --shadow-2xl: 0 20px 48px rgba(44, 36, 22, 0.22);
+    --shadow-warm: 0 10px 30px rgba(255, 107, 53, 0.15);
+    --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Typography */
+    --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* ============================================
+     Global Styles
+     ============================================ */
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-body);
+    background-color: var(--chef-cream);
+    color: var(--chef-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--chef-orange);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-base);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--chef-orange-dark);
+  }
+  
+  /* Selection */
+  ::selection {
+    background-color: var(--chef-orange);
+    color: white;
+  }
+  
+  ::-moz-selection {
+    background-color: var(--chef-orange);
+    color: white;
+  }
+  
+  /* Focus Styles */
+  *:focus-visible {
+    outline: 3px solid var(--chef-orange);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+  
+  /* ============================================
+     Utility Classes
+     ============================================ */
+  
+  .chef-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+  }
+  
+  .chef-page-header {
+    background: linear-gradient(135deg, var(--chef-orange) 0%, var(--chef-red) 100%);
+    color: white;
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-warm);
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, var(--chef-orange) 0%, var(--chef-red) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .pattern-bg {
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 35px,
+        rgba(255, 107, 53, 0.03) 35px,
+        rgba(255, 107, 53, 0.03) 70px
+      );
+  }
+  
+  /* ============================================
+     Status-Specific Styles
+     ============================================ */
+  
+  .status-idle {
+    background-color: var(--status-idle);
+  }
+  
+  .status-placed {
+    background-color: var(--status-placed);
+  }
+  
+  .status-processing {
+    background-color: var(--status-processing);
+  }
+  
+  .status-delivered {
+    background-color: var(--status-delivered);
+  }
+  
+  /* Status Glow Effects */
+  .status-glow-idle {
+    box-shadow: 0 0 20px rgba(158, 158, 158, 0.4);
+  }
+  
+  .status-glow-placed {
+    box-shadow: 0 0 20px rgba(255, 167, 38, 0.4);
+  }
+  
+  .status-glow-processing {
+    box-shadow: 0 0 20px rgba(66, 165, 245, 0.4);
+  }
+  
+  .status-glow-delivered {
+    box-shadow: 0 0 20px rgba(102, 187, 106, 0.4);
+  }
