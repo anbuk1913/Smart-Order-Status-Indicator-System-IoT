@@ -13,13 +13,16 @@ load_dotenv()
 
 app = FastAPI()
 
-# CORS
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-]
-# ... inside main.py ...
+cors_origins_str = os.getenv("CORS_ORIGINS", "")
+origins = cors_origins_str.split(",") if cors_origins_str else []
+
+client_port = os.getenv("CLIENT_PORT")
+
+if client_port:
+    origins.append(f"http://localhost:{client_port}")
+
+
+origins = list(set(origins))
 
 app.include_router(tables.router)
 app.include_router(iot.router)
@@ -56,6 +59,3 @@ async def login(user: User):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-# Include routers later
-# app.include_router(tables.router)
-# app.include_router(iot.router)

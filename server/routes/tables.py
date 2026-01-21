@@ -23,6 +23,10 @@ async def get_tables(current_user: User = Depends(get_current_user)):
 
 @router.post("/", response_model=TableModel)
 async def create_table(table: TableCreate, current_user: User = Depends(get_current_user)):
+    # Check if table name already exists
+    if await tables_collection.find_one({"tableName": table.tableName}):
+        raise HTTPException(status_code=400, detail="Table name already exists")
+        
     # Generate random ID: 3 letters, 3 numbers, shuffled
     while True:
         letters = ''.join(random.choices(string.ascii_uppercase, k=3))
