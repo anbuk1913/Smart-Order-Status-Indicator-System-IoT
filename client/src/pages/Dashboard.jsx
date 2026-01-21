@@ -1,66 +1,100 @@
-import { useState, useEffect } from 'react';
-import api from '../api/axios';
-import TableCard from '../components/TableCard';
-import { useAuth } from '../context/AuthContext';
-import { FaPlus, FaSignOutAlt } from 'react-icons/fa';
+import { useState, useEffect } from 'react'
+import api from '../api/axios'
+import TableCard from '../components/TableCard'
+import Toast from '../components/Toast'
+import ConfirmationModal from '../components/ConfirmationModal'
+import { useAuth } from '../context/AuthContext'
+import { FaPlus, FaSignOutAlt } from 'react-icons/fa'
 
 const Dashboard = () => {
-    const [tables, setTables] = useState([]);
-    const [newTableName, setNewTableName] = useState('');
-    const { logout, user } = useAuth();
-    const [loading, setLoading] = useState(true);
+    const [tables, setTables] = useState([])
+    const [newTableName, setNewTableName] = useState('')
+    const { logout, user } = useAuth()
+    const [loading, setLoading] = useState(true)
+    const [toast, setToast] = useState({ message: '', type: '', visible: false })
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [tableToDelete, setTableToDelete] = useState(null);
+
+    const showToast = (message, type) => {
+        setToast({ message, type, visible: true })
+    }
+
+    const handleCloseToast = () => {
+        setToast({ ...toast, visible: false })
+    }
 
     const fetchTables = async () => {
         try {
-            const response = await api.get('/tables');
-            setTables(response.data);
+            const response = await api.get('/tables')
+            setTables(response.data)
         } catch (error) {
-            console.error('Error fetching tables:', error);
+            console.error('Error fetching tables:', error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
     };
 
     useEffect(() => {
-        fetchTables();
-        const interval = setInterval(fetchTables, 5000); // Polling every 5 sec
-        return () => clearInterval(interval);
-    }, []);
+        fetchTables()
+        const interval = setInterval(fetchTables, 5000)
+        return () => clearInterval(interval)
+    }, [])
 
     const handleAddTable = async (e) => {
         e.preventDefault();
+
+        if (!newTableName.trim()) {
+            showToast('Table Name is required', 'error');
+            return;
+        }
+
         try {
             await api.post('/tables', {
                 tableName: newTableName
-            });
-            setNewTableName('');
-            fetchTables();
+            })
+            setNewTableName('')
+            fetchTables()
+            showToast('Table added successfully', 'success')
         } catch (error) {
-            alert('Error adding table (ID might be duplicate)');
+            const errorMessage = error.response?.data?.detail || 'Error adding table';
+            showToast(errorMessage, 'warning')
         }
     };
 
     const handleUpdateTable = async (id, updates) => {
         try {
-            await api.put(`/tables/${id}`, updates);
+            await api.put(`/tables/${id}`, updates)
             // Optimistic update or refetch
-            setTables(tables.map(t => t._id === id ? { ...t, ...updates } : t));
+            setTables(tables.map(t => t._id === id ? { ...t, ...updates } : t))
+            showToast('Table updated successfully', 'success')
         } catch (error) {
-            console.error('Error updating table:', error);
+            console.error('Error updating table:', error)
+            showToast('Error updating table', 'error')
         }
     };
 
-    const handleDeleteTable = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this table?')) return;
+    const handleDeleteTable = (id) => {
+        setTableToDelete(id);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDeleteTable = async () => {
+        if (!tableToDelete) return;
+
         try {
-            await api.delete(`/tables/${id}`);
-            setTables(tables.filter(t => t._id !== id));
+            await api.delete(`/tables/${tableToDelete}`)
+            setTables(tables.filter(t => t._id !== tableToDelete))
+            showToast('Table deleted successfully', 'success')
         } catch (error) {
-            console.error('Error deleting table:', error);
+            console.error('Error deleting table:', error)
+            showToast('Error deleting table', 'error')
+        } finally {
+            setIsDeleteModalOpen(false);
+            setTableToDelete(null);
         }
     };
 
-    if (loading) return <div style={{ padding: '2rem' }}>Loading...</div>;
+    if (loading) return <div style={{ padding: '2rem' }}>Loading...</div>
 
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
@@ -83,15 +117,32 @@ const Dashboard = () => {
                             type="text"
                             value={newTableName}
                             onChange={(e) => setNewTableName(e.target.value)}
-                            required
+                            // required  <-- Removed HTML validation
                             style={{ width: '100%', boxSizing: 'border-box' }}
+                            className="bg-gray-800 text-white border border-gray-700 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ease-in-out"
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button type="submit" className="btn btn-primary transition-transform duration-200 hover:scale-105 active:scale-95" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <FaPlus /> Add Table
                     </button>
                 </form>
             </section>
+
+            {toast.visible && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={handleCloseToast}
+                />
+            )}
+
+            <ConfirmationModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={confirmDeleteTable}
+                title="Delete Table"
+                message="Are you sure you want to delete this table? This action cannot be undone."
+            />
 
             <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
                 {tables.map(table => (

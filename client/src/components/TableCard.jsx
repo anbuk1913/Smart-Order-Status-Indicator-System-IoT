@@ -20,7 +20,7 @@ const TableCard = ({ table, onUpdate, onDelete }) => {
     };
 
     return (
-        <div className="card" style={{
+        <div className="card transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg" style={{
             opacity: isActive ? 1 : 0.6,
             borderLeft: `4px solid ${isActive ? statusColors[table.status] || 'gray' : 'var(--status-inactive)'}`
         }}>
@@ -41,7 +41,8 @@ const TableCard = ({ table, onUpdate, onDelete }) => {
                             border: '1px solid #333',
                             backgroundColor: table.status === status ? statusColors[status] : 'transparent',
                             color: table.status === status ? '#fff' : 'var(--text-secondary)',
-                            cursor: isActive ? 'pointer' : 'not-allowed'
+                            cursor: isActive ? 'pointer' : 'not-allowed',
+                            transition: 'all 0.3s ease'
                         }}
                     >
                         {status.toUpperCase()}
@@ -63,7 +64,7 @@ const TableCard = ({ table, onUpdate, onDelete }) => {
                 </div>
                 <button
                     onClick={() => onDelete(table._id)}
-                    className="btn-danger"
+                    className="btn-danger transition-transform duration-200 hover:scale-110"
                     style={{ padding: '0.25rem 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <FaTrash />
