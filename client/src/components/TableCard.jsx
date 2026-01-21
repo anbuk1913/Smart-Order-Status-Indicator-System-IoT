@@ -39,6 +39,7 @@ const TableCard = ({ table, onUpdate, onDelete }) => {
                             padding: '0.25rem 0.5rem',
                             borderRadius: '0.25rem',
                             border: '1px solid #333',
+                            fontSize: '0.875rem',
                             backgroundColor: table.status === status ? statusColors[status] : 'transparent',
                             color: table.status === status ? '#fff' : 'var(--text-secondary)',
                             cursor: isActive ? 'pointer' : 'not-allowed',
