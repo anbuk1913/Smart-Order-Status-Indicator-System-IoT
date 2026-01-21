@@ -1,0 +1,70 @@
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-blue: #3b82f6;
+  --status-idle: #6b7280;
+  --status-placed: #3b82f6;
+  --status-processing: #eab308;
+  --status-delivered: #22c55e;
+  --status-inactive: #ef4444;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+input {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid #333;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+input:focus {
+    outline: 2px solid var(--accent-blue);
+    border-color: transparent;
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
