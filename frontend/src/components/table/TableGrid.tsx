@@ -1,23 +1,36 @@
+import { useState } from 'react';
 import type { Table } from '../../types/table';
 import { TableCard } from './TableCard';
+import TableModal from './TableModal';
 
 interface TableGridProps {
   tables: Table[];
-  onTableClick: (table: Table) => void;
   onUpdate: () => void;
 }
 
-export const TableGrid = ({ tables, onTableClick, onUpdate }: TableGridProps) => {
+export const TableGrid = ({ tables, onUpdate }: TableGridProps) => {
+  const [selectedTable, setSelectedTable] = useState<Table | null>(null);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {tables.map((table) => (
-        <TableCard
-          key={table._id}
-          table={table}
-          onClick={() => onTableClick(table)}
+    <>
+      <div className="grid">
+        {tables.map((table) => (
+          <TableCard
+            key={table.id}
+            table={table}
+            onClick={() => setSelectedTable(table)}
+            onUpdate={onUpdate}
+          />
+        ))}
+      </div>
+
+      {selectedTable && (
+        <TableModal
+          table={selectedTable}
+          onClose={() => setSelectedTable(null)}
           onUpdate={onUpdate}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 };

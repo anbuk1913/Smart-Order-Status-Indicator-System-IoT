@@ -1,5 +1,5 @@
 export interface Table {
-  _id: string;
+  id: string;
   tableName: string;
   status: 'idle' | 'placed' | 'processing' | 'delivered';
   isActive: boolean;

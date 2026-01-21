@@ -1,8 +1,4 @@
-/**
- * Utility functions for JWT token management
- */
-
-const INACTIVITY_TIMEOUT_MS = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+const INACTIVITY_TIMEOUT_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 interface TokenPayload {
   exp: number;
@@ -10,9 +6,6 @@ interface TokenPayload {
   [key: string]: any;
 }
 
-/**
- * Decode JWT token without verification (client-side only)
- */
 export const decodeToken = (token: string): TokenPayload | null => {
   try {
     const base64Url = token.split('.')[1];
@@ -30,36 +23,24 @@ export const decodeToken = (token: string): TokenPayload | null => {
   }
 };
 
-/**
- * Check if token is expired
- */
 export const isTokenExpired = (token: string): boolean => {
   const payload = decodeToken(token);
   if (!payload || !payload.exp) {
     return true;
   }
-
-  // exp is in seconds, Date.now() is in milliseconds
   const expirationTime = payload.exp * 1000;
   const currentTime = Date.now();
-
   return currentTime >= expirationTime;
 };
 
-/**
- * Get token expiration time
- */
 export const getTokenExpirationTime = (token: string): number | null => {
   const payload = decodeToken(token);
   if (!payload || !payload.exp) {
     return null;
   }
-  return payload.exp * 1000; // Convert to milliseconds
+  return payload.exp * 1000;
 };
 
-/**
- * Get time until token expires (in milliseconds)
- */
 export const getTimeUntilExpiry = (token: string): number => {
   const expirationTime = getTokenExpirationTime(token);
   if (!expirationTime) {
@@ -68,37 +49,24 @@ export const getTimeUntilExpiry = (token: string): number => {
   return Math.max(0, expirationTime - Date.now());
 };
 
-/**
- * Store last activity timestamp
- */
 export const updateLastActivity = (): void => {
   localStorage.setItem('lastActivity', Date.now().toString());
 };
 
-/**
- * Get last activity timestamp
- */
 export const getLastActivity = (): number | null => {
   const lastActivity = localStorage.getItem('lastActivity');
   return lastActivity ? parseInt(lastActivity, 10) : null;
 };
 
-/**
- * Check if user has been inactive for more than 6 hours
- */
 export const isInactivityExpired = (): boolean => {
   const lastActivity = getLastActivity();
   if (!lastActivity) {
-    return false; // No activity recorded yet
+    return false;
   }
-
   const timeSinceLastActivity = Date.now() - lastActivity;
   return timeSinceLastActivity >= INACTIVITY_TIMEOUT_MS;
 };
 
-/**
- * Clear activity tracking
- */
 export const clearActivityTracking = (): void => {
   localStorage.removeItem('lastActivity');
 };

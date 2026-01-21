@@ -15,7 +15,7 @@ export const OrderStatus = ({ table, onClose, onUpdate }: OrderStatusProps) => {
   const handleStatusChange = async (newStatus: string) => {
     setUpdating(true);
     try {
-      await tableService.updateStatus(table._id, newStatus);
+      await tableService.updateStatus(table.id, newStatus);
       onUpdate();
     } catch (err) {
       console.error('Failed to update status', err);
@@ -32,12 +32,12 @@ export const OrderStatus = ({ table, onClose, onUpdate }: OrderStatusProps) => {
   ];
 
   return (
-    <div className="modal-overlay animate-fadeIn">
-      <div className="modal-container modal-container-lg animate-scaleIn">
+    <div className="modal-overlay animate-fadeIn" onClick={onClose}>
+      <div className="modal-container modal-container-lg animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="modal-header">
           <div>
-            <h2 className="modal-title">{table.tableName}</h2>
+            <h2 className="modal-title">🍽️ {table.tableName}</h2>
             <p className="text-gray-500 text-sm mt-1">Manage order status and track progress</p>
           </div>
           <button
@@ -52,11 +52,11 @@ export const OrderStatus = ({ table, onClose, onUpdate }: OrderStatusProps) => {
         {/* Body */}
         <div className="modal-body">
           {/* Current Status Section */}
-          <div className="status-modal-current">
-            <div className="status-modal-current-label">Current Status</div>
-            <div className={`status-modal-current-badge ${STATUS_COLORS[table.status]}`}>
-              <span>{statuses.find(s => s.key === table.status)?.icon}</span>
-              <span>{table.status.toUpperCase()}</span>
+          <div className="status-current-section">
+            <div className="status-current-label">Current Status</div>
+            <div className={`status-current-badge ${STATUS_COLORS[table.status]}`}>
+              <span className="text-2xl">{statuses.find(s => s.key === table.status)?.icon}</span>
+              <span className="text-lg font-bold">{table.status.toUpperCase()}</span>
             </div>
           </div>
 
@@ -72,12 +72,12 @@ export const OrderStatus = ({ table, onClose, onUpdate }: OrderStatusProps) => {
                   key={status.key}
                   onClick={() => handleStatusChange(status.key)}
                   disabled={updating || table.status === status.key}
-                  className={`status-button ${
+                  className={`status-update-button ${
                     table.status === status.key ? 'active' : ''
-                  }`}
+                  } ${updating ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <div className="flex flex-col items-center gap-2">
-                    <span className="text-3xl">{status.icon}</span>
+                    <span className="text-4xl">{status.icon}</span>
                     <span className="text-sm font-semibold">{status.label}</span>
                   </div>
                 </button>
@@ -87,18 +87,18 @@ export const OrderStatus = ({ table, onClose, onUpdate }: OrderStatusProps) => {
 
           {/* LED Indicators Info */}
           <div className="info-card">
-            <h4 className="info-card-title">LED Indicators Guide</h4>
+            <h4 className="info-card-title">💡 LED Indicators Guide</h4>
             <ul className="info-card-list">
-              <li>
-                <span className="w-3 h-3 rounded-full bg-yellow-400 inline-block mr-2"></span>
+              <li className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
                 <span><strong>LED 1 (Yellow)</strong> - Order Placed</span>
               </li>
-              <li>
-                <span className="w-3 h-3 rounded-full bg-blue-400 inline-block mr-2"></span>
+              <li className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-blue-400"></span>
                 <span><strong>LED 2 (Blue)</strong> - Processing</span>
               </li>
-              <li>
-                <span className="w-3 h-3 rounded-full bg-green-400 inline-block mr-2"></span>
+              <li className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-green-400"></span>
                 <span><strong>LED 3 (Green)</strong> - Delivered</span>
               </li>
             </ul>

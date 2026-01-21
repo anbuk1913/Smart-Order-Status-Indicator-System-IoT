@@ -37,13 +37,13 @@ export const AddTableModal = ({ isOpen, onClose, onAdd }: AddTableModalProps) =>
   };
 
   return (
-    <div className="modal-overlay animate-fadeIn">
-      <div className="modal-container add-table-modal">
+    <div className="modal-overlay animate-fadeIn" onClick={onClose}>
+      <div className="modal-container animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="modal-header">
           <div>
-            <h3 className="modal-title">Add New Table</h3>
-            <p className="text-gray-500 text-sm mt-1">Create a new table for your restaurant</p>
+            <h3 className="modal-title">✨ Add New Table</h3>
+            <p className="text-gray-500 text-sm mt-1">Create a new dining table for your restaurant</p>
           </div>
           <button
             onClick={onClose}
@@ -87,12 +87,12 @@ export const AddTableModal = ({ isOpen, onClose, onAdd }: AddTableModalProps) =>
 
             {/* Preview Card */}
             {tableName.trim() && (
-              <div className="card p-4 bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200 animate-fadeInUp">
+              <div className="preview-card animate-fadeInUp">
                 <div className="text-sm font-semibold text-gray-600 mb-2">Preview:</div>
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">🍽️</span>
-                  <span className="text-lg font-bold text-gray-800">{tableName}</span>
-                  <span className="ml-auto px-3 py-1 bg-gray-400 text-white text-xs rounded-full">
+                  <span className="text-lg font-bold text-gray-800">{tableName.trim()}</span>
+                  <span className="ml-auto px-3 py-1 bg-gray-400 text-white text-xs rounded-full font-semibold">
                     IDLE
                   </span>
                 </div>

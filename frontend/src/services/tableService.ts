@@ -4,6 +4,7 @@ import type { Table, CreateTableDto, UpdateTableDto } from '../types/table';
 export const tableService = {
   getAllTables: async (): Promise<Table[]> => {
     const response = await api.get<Table[]>('/tables');
+    console.log("all table",response.data)
     return response.data;
   },
 

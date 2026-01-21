@@ -10,7 +10,7 @@ import {
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const checkIntervalRef = useRef<number | null>(null);
 
   const checkAuth = () => {
     const token = authService.getToken();
@@ -21,22 +21,18 @@ export const useAuth = () => {
       return;
     }
 
-    // Check if token is expired
     if (isTokenExpired(token)) {
       authService.logout();
       setIsAuthenticated(false);
       setLoading(false);
-      // Dispatch event to trigger navigation in components
       window.dispatchEvent(new Event('auth-token-expired'));
       return;
     }
 
-    // Check if inactivity period expired
     if (isInactivityExpired()) {
       authService.logout();
       setIsAuthenticated(false);
       setLoading(false);
-      // Dispatch event to trigger navigation in components
       window.dispatchEvent(new Event('auth-token-expired'));
       return;
     }
@@ -53,12 +49,10 @@ export const useAuth = () => {
   useEffect(() => {
     checkAuth();
 
-    // Set up periodic token expiry check (every minute)
-    checkIntervalRef.current = setInterval(() => {
+    checkIntervalRef.current = window.setInterval(() => {
       checkAuth();
-    }, 60000); // Check every minute
+    }, 60000);
 
-    // Track user activity
     const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
     const handleActivity = () => {
       const token = authService.getToken();
@@ -71,19 +65,16 @@ export const useAuth = () => {
       window.addEventListener(event, handleActivity, { passive: true });
     });
 
-    // Listen for storage changes (e.g., when logout clears token in another tab/component)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'token') {
         checkAuth();
       }
     };
 
-    // Listen for custom storage event (for same-tab updates)
     const handleCustomStorageChange = () => {
       checkAuth();
     };
 
-    // Listen for token expired event from API interceptor
     const handleTokenExpiredEvent = () => {
       handleTokenExpired();
     };
@@ -109,14 +100,12 @@ export const useAuth = () => {
     const response = await authService.login(credentials);
     authService.setToken(response.access_token);
     setIsAuthenticated(true);
-    // Dispatch custom event to notify other components
     window.dispatchEvent(new Event('auth-storage-change'));
   };
 
   const logout = () => {
     authService.logout();
     setIsAuthenticated(false);
-    // Dispatch custom event to notify other components
     window.dispatchEvent(new Event('auth-storage-change'));
   };
 

@@ -68,7 +68,13 @@
 //   plugins: [],
 // }
 
+
+
 module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -77,12 +83,25 @@ module.exports = {
       colors: {
         chef: {
           orange: '#FF6B35',
+          'orange-light': '#FF8A5C',
+          'orange-dark': '#E65525',
           red: '#D32F2F',
+          'red-light': '#EF5350',
+          'red-dark': '#B71C1C',
           dark: '#2C2416',
+          'dark-light': '#3D3326',
           cream: '#FFF8F0',
+          'cream-dark': '#F5E8D8',
           gold: '#FFD700',
-        }
-      }
-    }
-  }
+          'gold-light': '#FFE54C',
+          'gold-dark': '#DAB600',
+        },
+      },
+      boxShadow: {
+        'warm': '0 10px 30px rgba(255, 107, 53, 0.15)',
+        'glow': '0 0 20px rgba(255, 215, 0, 0.3)',
+      },
+    },
+  },
+  plugins: [],
 }

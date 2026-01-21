@@ -33,7 +33,8 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-500 via-red-500 to-red-600 px-4 sm:px-6 py-8 sm:py-12 pattern-bg animate-fadeIn">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-500 via-red-500 to-red-600 px-4 sm:px-6 py-8 sm:py-12 animate-fadeIn relative overflow-hidden">
+      {/* Floating Chef Elements */}
       <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 text-4xl xl:text-6xl animate-bounce delay-100">🍳</div>
         <div className="absolute top-40 right-20 text-3xl xl:text-5xl animate-bounce delay-300">👨‍🍳</div>
@@ -41,16 +42,16 @@ export const LoginForm = () => {
         <div className="absolute bottom-40 right-10 text-3xl xl:text-5xl animate-bounce delay-200">🔥</div>
       </div>
 
-      <div className="card w-[90%] sm:w-full max-w-md mx-auto animate-scaleIn relative z-10">
+      <div className="card sm:w-full max-w-md mx-auto animate-scaleIn relative z-10 shadow-2xl">
         {/* Logo/Header */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-full mb-3 sm:mb-4 shadow-lg animate-pulse">
             <span className="text-3xl sm:text-4xl">👨‍🍳</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">
             Chef Dashboard
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 px-2">Welcome back! Please login to continue</p>
+          <p className="text-sm text-gray-600">Welcome back! Please login to continue</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -108,7 +109,7 @@ export const LoginForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`btn btn-primary w-full btn-lg btn-ripple ${loading ? 'btn-loading' : ''}`}
+            className={`btn btn-primary w-full btn-lg ${loading ? 'btn-loading' : ''}`}
           >
             {loading ? '' : '🚀 Login to Dashboard'}
           </button>
