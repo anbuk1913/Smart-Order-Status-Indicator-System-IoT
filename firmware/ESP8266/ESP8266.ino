@@ -3,8 +3,8 @@
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
+const char* ssid = "Airtel_7904030785";
+const char* password = "air46278";
 
 const char* serverUrl = "http://192.168.1.100:8000/api/iot/table-status";
 const char* tableId = "TABLE_002";
