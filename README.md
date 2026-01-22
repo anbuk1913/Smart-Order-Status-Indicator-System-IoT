@@ -34,7 +34,7 @@ A full-stack IoT system for managing restaurant table statuses using React, Pyth
 4. Configure `.env` file (if needed).
 5. Run the server:
    ```bash
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   uvicorn main:app --reload --host 0.0.0.0 --port 1312
    ```
    Server runs at: `http://localhost:8000`
 

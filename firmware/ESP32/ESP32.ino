@@ -1,16 +1,13 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
-#include <ArduinoJson.h> // Make sure to install ArduinoJson library
+#include <ArduinoJson.h>
 
-// WiFi Credentials
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
 
-// Backend API
-const char* serverUrl = "http://192.168.1.100:8000/api/iot/table-status"; // Replace with your PC IP
-const char* tableId = "TABLE_001"; // Unique ID for this device
+const char* serverUrl = "http://192.168.1.100:8000/api/iot/table-status";
+const char* tableId = "TABLE_001";
 
-// LED Pins
 const int ledPlaced = 12;
 const int ledProcessing = 14;
 const int ledDelivered = 27;
@@ -22,7 +19,6 @@ void setup() {
   pinMode(ledProcessing, OUTPUT);
   pinMode(ledDelivered, OUTPUT);
   
-  // Turn off LEDs initially
   digitalWrite(ledPlaced, LOW);
   digitalWrite(ledProcessing, LOW);
   digitalWrite(ledDelivered, LOW);
