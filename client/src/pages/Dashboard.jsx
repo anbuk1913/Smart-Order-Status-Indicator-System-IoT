@@ -5,6 +5,7 @@ import Toast from '../components/Toast'
 import ConfirmationModal from '../components/ConfirmationModal'
 import { useAuth } from '../context/AuthContext'
 import { FaPlus, FaSignOutAlt } from 'react-icons/fa'
+import StarBackground from '../components/StarBackground'
 
 const Dashboard = () => {
     const [tables, setTables] = useState([])
@@ -97,7 +98,8 @@ const Dashboard = () => {
     if (loading) return <div style={{ padding: '2rem' }}>Loading...</div>
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem', position: 'relative' }}>
+            <StarBackground />
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h1 style={{ margin: 0 }}>Kitchen Dashboard</h1>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -108,7 +110,7 @@ const Dashboard = () => {
                 </div>
             </header>
 
-            <section className="card" style={{ marginBottom: '2rem' }}>
+            <section className="card" style={{ marginBottom: '2rem', opacity: 0.6 }}>
                 <h3 style={{ marginTop: 0 }}>Add New Table</h3>
                 <form onSubmit={handleAddTable} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
                     <div style={{ flex: 1, minWidth: '200px' }}>

@@ -21,7 +21,7 @@ const TableCard = ({ table, onUpdate, onDelete }) => {
 
     return (
         <div className="card transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg" style={{
-            opacity: isActive ? 1 : 0.6,
+            opacity: isActive ? 1 : 0.5,
             borderLeft: `4px solid ${isActive ? statusColors[table.status] || 'gray' : 'var(--status-inactive)'}`
         }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
